@@ -1,0 +1,16 @@
+image: cirrusci/flutter:stable
+
+pages:
+  script:
+  - flutter build web
+  # The build directory is created based on the value set for projectName in
+  # website/siteConfig.js. If you change it there, you need to change it here
+  # as well.
+  - mv ./build/web/* ./public
+
+  artifacts:
+    paths:
+    - public
+
+  only:
+  - master
