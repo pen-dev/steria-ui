@@ -7,6 +7,7 @@ pages:
   # The build directory is created based on the value set for projectName in
   # website/siteConfig.js. If you change it there, you need to change it here
   # as well.
+  - mkdir ./public
   - mv ./build/web/* ./public
 
   artifacts:
