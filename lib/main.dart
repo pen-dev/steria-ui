@@ -35,7 +35,7 @@ class StartPageState extends State<SearchPage>{
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text('Test')
+          Text('¯\_(ツ)_/¯')
 //          TextFormField(
 //            validator: (value) {
 //              if (value.isEmpty) {
