@@ -116,7 +116,7 @@ class HomePage extends StatelessWidget{
               child: TextField(
                 decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Find our product"
+                    hintText: "Название улицы и номер дома"
                 ),
               ),
             ),
@@ -132,21 +132,26 @@ class HomePage extends StatelessWidget{
   Widget searchButton() =>Padding(
       padding: const EdgeInsets.all(30.0),
     child: Material(
-      elevation: 10.0,
-      color: Colors.transparent,
-      shape: const StadiumBorder(),
+      elevation: 1.00,
+      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      color: Color.fromRGBO(149, 16, 172, 100),
+//      shape: const StadiumBorder(),
       child: InkWell(
-        onTap: onPressed,
-        splashColor: Colors.yellow,
+        onTap: (){
+          print('debug');
+        },
+        splashColor: Color.fromRGBO(160, 16, 172, 100),
         child: Ink(
             height: 50.0,
             width: 150.0,
-            decoration: ShapeDecoration(
-                shape: const StadiumBorder(),
-                gradient: LinearGradient(
-                  colors: <Color>[Colors.red, Colors.blue],
-                )
-            ),
+//            decoration: ShapeDecoration(
+//                shape: const StadiumBorder(),
+////                color: Color.fromRGBO(149, 16, 172, 0),
+//                gradient: LinearGradient(
+//                  colors: <Color>[Color.fromRGBO(149, 16, 172, 100),
+//                    Color.fromRGBO(149, 16, 172, 100)],
+//                )
+//            ),
             child: Center(
                 child: Text(
                   'Найти',
