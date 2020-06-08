@@ -28,8 +28,10 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
   Widget build(BuildContext context) {
     Widget _inputSearch(TextEditingController controller) {
       return Container(
-        child: Card(
-          elevation: 2.0,
+        height: 60,
+        child: Material(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.00),
             child: Row(
@@ -48,25 +50,18 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
                     },
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintStyle: TextStyle(fontSize: 15,
+                        hintStyle: TextStyle(fontSize: 20,
                             color: Colors.grey,
                             fontWeight: FontWeight.bold),
                         hintText: "Название улицы и номер дома",
                         focusColor: Colors.blue,
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue,
-                                width: 3.00)
-                        ),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: Icon(Icons.add),
-                        )
                     ),
                   ),
                 ),
               ],
             ),
-          ),)
+          ),
+        )
         ,
       );
     }
@@ -74,7 +69,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
     Widget _buttonDoSearch(void func()) {
       return Material(
           elevation: 1.00,
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          borderRadius: BorderRadius.all(Radius.circular(15)),
           color: Color.fromRGBO(149, 16, 172, 100),
 //      shape: const StadiumBorder(),
           child: InkWell(
@@ -144,13 +139,25 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
     Widget _textTitleHouseInfo(String txt){
       return Text(
         txt,
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.left,
         style: TextStyle(
-            color: Colors.black,
+            color: Colors.grey,
             fontWeight: FontWeight.normal,
-            fontSize: 20.0),
+            fontSize: 14.0),
       );
     }
+
+    Widget _textTitleHouseInfo2(String txt){
+      return Text(
+        txt,
+        textAlign: TextAlign.left,
+        style: TextStyle(
+            color: Color.fromRGBO(160, 16, 172, 100),
+            fontWeight: FontWeight.normal,
+            fontSize: 14.0),
+      );
+    }
+
 
     Widget _rowInfo(String title, String val){
       return Padding(
@@ -161,8 +168,26 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
             SizedBox(
               width: 100,
             ),
-            _textTitleHouseInfo(val),
+            _textTitleHouseInfo2(val),
           ],
+        )
+      );
+    }
+
+    Widget _rowTitle(){
+      return Container(
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: 8.0),
+            Text(
+              'Отдельный парк.\nЖелезнодорожные мосты',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 20.0),
+          )
+          ]
         )
       );
     }
@@ -170,20 +195,25 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
     Widget _houseInfoBlock(){
       return Container(
         height: 300.0,
-        child: Padding(
-          padding: EdgeInsets.only(right: 10.0, left: 10.0),
-          child: Center(
-            child: Card(
-              elevation: 10.0,
-             child: Padding(
-               padding: EdgeInsets.symmetric(horizontal: 50.0),
-               child: Column(
-                   children: <Widget>[
-                     SizedBox(height: 50.0),
-                     _rowInfo('Улица', _address),
-                   ]
-               ),
-             ),
+        child: Center(
+          child: Material(
+            elevation: 10.0,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 50.0),
+              child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 8),
+                    _rowTitle(),
+                    SizedBox(height: 10.00),
+                    _rowInfo('Улица:', 'Кирхоглани В.Д.\nНорин В.А.'),
+                    SizedBox(height: 4.00),
+                    _rowInfo('Год постройки:', '1960-1964'),
+                    SizedBox(height: 4.00),
+                    _rowInfo('Стиль:', 'Современный'),
+                  ]
+              ),
             ),
           ),
         )
@@ -197,11 +227,15 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
         backgroundColor: Theme
             .of(context)
             .primaryColor,
-        body: Column(children: <Widget>[
-          _searchBlock(() {
-            print('debug');
-          }),
-          _houseInfoBlock(),
-        ]));
+        body: Padding(
+          padding:  EdgeInsets.only(right: 20.0, left: 20.0),
+          child: Column(children: <Widget>[
+            SizedBox(height: 20.0),
+            _searchBlock(() {
+              print('debug');
+            }),
+            _houseInfoBlock(),
+          ]),
+        ));
   }
 }
