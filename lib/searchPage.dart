@@ -180,9 +180,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
                child: Column(
                    children: <Widget>[
                      SizedBox(height: 50.0),
-                     _rowInfo('Улица', 'Достоевского'),
-                     _rowInfo('Улица', 'Достоевского'),
-                     _rowInfo('Улица', 'Достоевского'),
+                     _rowInfo('Улица', _address),
                    ]
                ),
              ),
