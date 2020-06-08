@@ -33,39 +33,41 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.00),
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
                 Icon(Icons.search),
-              SizedBox(
-              width: 10.0,
-              ),
-              Expanded(
-                child: TextField(
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                  onChanged: (String value) {
-                    print('Text: $value');
-                  },
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintStyle: TextStyle(fontSize: 15,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold),
-                    hintText: "Название улицы и номер дома",
-                    focusColor: Colors.blue,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue, width: 3.00)
+                SizedBox(
+                  width: 10.0,
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: controller,
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    onChanged: (String value) {
+                      print('Text: $value');
+                    },
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(fontSize: 15,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold),
+                        hintText: "Название улицы и номер дома",
+                        focusColor: Colors.blue,
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue,
+                                width: 3.00)
+                        ),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: Icon(Icons.add),
+                        )
                     ),
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                        child: Icon(Icons.add),
-                      )
                   ),
                 ),
-              ),
-          ],
-        ),
-      ),)
-      ,
+              ],
+            ),
+          ),)
+        ,
       );
     }
 
@@ -77,7 +79,9 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
 //      shape: const StadiumBorder(),
           child: InkWell(
               onTap: () {
-                func();
+                setState(() {
+                  _address = _searchController.text;
+                });
               },
               splashColor: Color.fromRGBO(160, 16, 172, 100),
               child: Ink(
@@ -97,9 +101,9 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
           )
       );
     }
-    void _searchHouse(){
+    void _searchHouse() {
       _address = _searchController.text;
-      _searchController.clear();
+//      _searchController.clear();
       print('Text: $_address');
     }
 
@@ -113,7 +117,8 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
                 ),
                 SizedBox(height: 30,),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 20.0, left: 10.0, right: 10.0),
+                  padding: EdgeInsets.only(
+                      bottom: 20.0, left: 10.0, right: 10.0),
                   child: _buttonDoSearch(_searchHouse),
                 ),
               ]
@@ -121,14 +126,84 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
       );
     }
 
+    Widget _resultText() {
+      print('address: $_address');
+      return Padding(
+        padding: EdgeInsets.only(bottom: 10.9),
+        child: Text(
+          _address,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.normal,
+              fontSize: 20.0),
+        ),
+      );
+    }
 
+    Widget _textTitleHouseInfo(String txt){
+      return Text(
+        txt,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.normal,
+            fontSize: 20.0),
+      );
+    }
 
+    Widget _rowInfo(String title, String val){
+      return Padding(
+        padding: EdgeInsets.only(bottom: 50.0),
+        child: Row(
+          children: <Widget>[
+            _textTitleHouseInfo(title),
+            SizedBox(
+              width: 100,
+            ),
+            _textTitleHouseInfo(val),
+          ],
+        )
+      );
+    }
+
+    Widget _houseInfoBlock(){
+      return Container(
+        height: 300.0,
+        child: Padding(
+          padding: EdgeInsets.only(right: 10.0, left: 10.0),
+          child: Center(
+            child: Card(
+              elevation: 10.0,
+             child: Padding(
+               padding: EdgeInsets.symmetric(horizontal: 50.0),
+               child: Column(
+                   children: <Widget>[
+                     SizedBox(height: 50.0),
+                     _rowInfo('Улица', 'Достоевского'),
+                     _rowInfo('Улица', 'Достоевского'),
+                     _rowInfo('Улица', 'Достоевского'),
+                   ]
+               ),
+             ),
+            ),
+          ),
+        )
+      );
+    }
+
+    if (_address == null) {
+      _address = 'test';
+    }
     return Scaffold(
         backgroundColor: Theme
             .of(context)
             .primaryColor,
         body: Column(children: <Widget>[
-          _searchBlock((){print('debug');}),
+          _searchBlock(() {
+            print('debug');
+          }),
+          _houseInfoBlock(),
         ]));
   }
 }
