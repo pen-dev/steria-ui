@@ -164,11 +164,15 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
         padding: EdgeInsets.only(bottom: 50.0),
         child: Row(
           children: <Widget>[
-            _textTitleHouseInfo(title),
+            SizedBox(
+                width: 100,
+                child: _textTitleHouseInfo(title)),
             SizedBox(
               width: 100,
             ),
-            _textTitleHouseInfo2(val),
+            SizedBox(
+                width: 100,
+                child : _textTitleHouseInfo2(val)),
           ],
         )
       );
@@ -194,7 +198,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
 
     Widget _houseInfoBlock(){
       return Container(
-        height: 300.0,
+        height: 400.0,
         child: Center(
           child: Material(
             elevation: 10.0,
@@ -207,7 +211,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
                     SizedBox(height: 8),
                     _rowTitle(),
                     SizedBox(height: 10.00),
-                    _rowInfo('Улица:', 'Кирхоглани В.Д.\nНорин В.А.'),
+                    _rowInfo('Архитекторы:', 'Кирхоглани В.Д.\nНорин В.А.'),
                     SizedBox(height: 4.00),
                     _rowInfo('Год постройки:', '1960-1964'),
                     SizedBox(height: 4.00),
