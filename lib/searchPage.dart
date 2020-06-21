@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:steriaf/house.dart';
 
 class SearchGeneralPage extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
   TextEditingController _searchController = TextEditingController();
 
   String _address;
+  House _houseInfo = House(title: '', architect: '', address: '');
 
   @override
   void initState() {
@@ -75,7 +77,8 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
           child: InkWell(
               onTap: () {
                 setState(() {
-                  _address = _searchController.text;
+//                  _houseInfo.address = _searchController.text;
+                  _houseInfo.getHouseData(address: _searchController.text);
                 });
               },
               splashColor: Color.fromRGBO(160, 16, 172, 100),
@@ -168,7 +171,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
                 width: 100,
                 child: _textTitleHouseInfo(title)),
             SizedBox(
-              width: 100,
+              width: 30,
             ),
             SizedBox(
                 width: 100,
@@ -178,13 +181,13 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
       );
     }
 
-    Widget _rowTitle(){
+    Widget _rowTitle(String title){
       return Container(
         child: Column(
           children: <Widget>[
             SizedBox(height: 8.0),
             Text(
-              'Отдельный парк.\nЖелезнодорожные мосты',
+              title,
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.black,
@@ -209,9 +212,9 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
               child: Column(
                   children: <Widget>[
                     SizedBox(height: 8),
-                    _rowTitle(),
+                    _rowTitle(this._houseInfo.title),
                     SizedBox(height: 10.00),
-                    _rowInfo('Архитекторы:', 'Кирхоглани В.Д.\nНорин В.А.'),
+                    _rowInfo('Архитекторы:', this._houseInfo.architect),
                     SizedBox(height: 4.00),
                     _rowInfo('Год постройки:', '1960-1964'),
                     SizedBox(height: 4.00),
@@ -238,6 +241,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
             _searchBlock(() {
               print('debug');
             }),
+//            if
             _houseInfoBlock(),
           ]),
         ));
