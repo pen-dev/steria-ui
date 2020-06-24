@@ -247,7 +247,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
 
     Widget _error_page(){
       return Container(
-          height: 600.0,
+          height: 400.0,
           child: Center(
             child: Material(
               elevation: 10.0,
@@ -303,11 +303,31 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
       );
     }
 
-    this.isLoading = this._houseInfo.isLoading;
+    Widget _versionInfo(){
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 50.0),
+        child: Center(
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 10),
+                InkWell(
+                  child: Text(
+                    'v0.0.2',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 12.0),
+                  ),
+                ),
 
-//    if (this._houseInfo.isFail){
-//      this._houseInfo = _initHouse();
-//    }
+              ],
+            )
+        )
+      );
+    }
+
+    this.isLoading = this._houseInfo.isLoading;
 
     return Scaffold(
         backgroundColor: Theme
@@ -321,14 +341,8 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
             (
                 this.isLoading ? _loadingPage() :
                 this._houseInfo.isFail ? _error_page() : _houseInfoBlock()
-            )
-//
-//            if (this.isLoading == true){
-//              _loadingPage()
-//            } else{
-//              _houseInfoBlock()
-//            }
-//            _error_page(),
+            ),
+            _versionInfo()
           ]),
         ));
   }
