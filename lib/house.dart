@@ -1,71 +1,49 @@
 import 'dart:convert' as convert;
+import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 
 class House{
   String title;
   String architect;
-  String address;
+  String fullAddress;
+  String style;
+  String year;
 //  Boolean isData;
+  bool isFail = false;
+  bool isLoading = false;
 
-  House({this.title, this.architect, this.address});
+  House({this.title, this.architect, this.fullAddress, this.style, this.year});
 
-
-  void getHouseData({String address}) async {
-
-//    http.post('http:/
-//    http.get('http://0.0.0.0:8000/test',
-//        headers: {
-////      "Content-Type": "application/json",
-//          "Connection":"keep-alive",
-//          "Content-Length":"110"}).then((response) => print('${response.statusCode}'));
+  String _url = 'https://steria.herokuapp.com/v1/house';
 
 
-//    http.get('http://0.0.0.0:8000/address').then((response) => print('test'));
-//    http.post('https://5ba6fcf2-0fb1-44c5-be92-e5f83cebd704.mock.pstmn.io/address',
-//    encoding: null,
-////        headers: { 'Content-Type': 'application/json'},
-////        headers: { 'Content-Type': 'text/plain'},
-//
-//        body:  {'version': '0.1.0'}).then((response) => print(response.statusCode));
-////    this.title = response.body;
+  void getHouseData(State page, {String address}) async {
+    print('start');
 
-//    var response = await http.post('https://jsonplaceholder.typicode.com/posts', body: {
-//      'title': 'Post 1',
-//      'content': 'Lorem ipsum dolor sit amet',
-//    });
+    this.isFail = false;
+    this.isLoading = true;
 
-//
-    try{
-      var response = await http.get(
-          'https://steria.herokuapp.com/v1/house'
-      );
-      Map<String, dynamic> data = convert.jsonDecode(response.body);
-      if (response.statusCode == 200){
-        this.architect = data['r_architect'];
-      }else{
-        this.architect = 'Error';
-      }
+    var response = await http.get(
+      '$_url?address=$address',
+    );
+    Map<String, dynamic> data = convert.jsonDecode(response.body);
+    print('$data');
 
-    }catch(e){
-      this.architect = e.toString();
+    if (response.statusCode == 200) {
+      this.title = data['r_name'].toString();
+      this.architect = data['r_architect'].toString();
+      this.year = data['r_years_string'].toString();
+      this.style = data['r_style'].toString();
+      this.fullAddress = data['r_adress'].toString();
+      
+    } else {
+      this.isFail = true;
 
     }
 
-
-
-
-
-
-
-
-    if (address == 'Обводный'){
-      print('ok');
-      this.address = address;
-//      this.architect =
-      this.title = 'Масляный мост';
-
-    }
+    this.isLoading = false;
+    page.setState(() {});
 
   }
 }

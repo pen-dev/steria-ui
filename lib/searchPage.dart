@@ -11,8 +11,19 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
   AnimationController _controller;
   TextEditingController _searchController = TextEditingController();
 
+  static House _initHouse(){
+    return House(
+        title: '',
+        architect: '',
+        fullAddress: '',
+        style: '',
+        year: ''
+    );
+  }
+
+  bool isLoading = true;
   String _address;
-  House _houseInfo = House(title: '', architect: '', address: '');
+  House _houseInfo = _initHouse();
 
   @override
   void initState() {
@@ -46,13 +57,13 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
                 Expanded(
                   child: TextField(
                     controller: controller,
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    style: TextStyle(fontSize: 14, color: Colors.black),
                     onChanged: (String value) {
                       print('Text: $value');
                     },
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintStyle: TextStyle(fontSize: 20,
+                        hintStyle: TextStyle(fontSize: 14,
                             color: Colors.grey,
                             fontWeight: FontWeight.bold),
                         hintText: "Название улицы и номер дома",
@@ -78,7 +89,11 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
               onTap: () {
                 setState(() {
 //                  _houseInfo.address = _searchController.text;
-                  _houseInfo.getHouseData(address: _searchController.text);
+//                this.isLoading = true;
+                  _houseInfo.getHouseData(
+                      this,
+                      address: _searchController.text
+                  );
                 });
               },
               splashColor: Color.fromRGBO(160, 16, 172, 100),
@@ -92,7 +107,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.normal,
-                            fontSize: 20.0),
+                            fontSize: 18.0),
                       )
                   )
               )
@@ -116,7 +131,10 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
                 SizedBox(height: 30,),
                 Padding(
                   padding: EdgeInsets.only(
-                      bottom: 20.0, left: 10.0, right: 10.0),
+                      bottom: 20.0,
+                      left: 10.0,
+                      right: 10.0
+                  ),
                   child: _buttonDoSearch(_searchHouse),
                 ),
               ]
@@ -216,9 +234,9 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
                     SizedBox(height: 10.00),
                     _rowInfo('Архитекторы:', this._houseInfo.architect),
                     SizedBox(height: 4.00),
-                    _rowInfo('Год постройки:', '1960-1964'),
+                    _rowInfo('Год постройки:', this._houseInfo.year),
                     SizedBox(height: 4.00),
-                    _rowInfo('Стиль:', 'Современный'),
+                    _rowInfo('Стиль:', this._houseInfo.style),
                   ]
               ),
             ),
@@ -227,9 +245,70 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
       );
     }
 
-    if (_address == null) {
-      _address = 'test';
+    Widget _error_page(){
+      return Container(
+          height: 600.0,
+          child: Center(
+            child: Material(
+              elevation: 10.0,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              color: Colors.red,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 50.0),
+                  child: Text(
+                    'Fatal',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 30.0),
+                  )
+
+              ),
+              ),
+            ),
+          );
     }
+
+    Widget _loadingPage(){
+      return Container(
+          height: 400.0,
+          padding: EdgeInsets.symmetric(horizontal: 50.0),
+          child: Center(
+            child: Material(
+              elevation: 10.0,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              color: Colors.white,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 50.0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Loading',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 30.0),
+                    ),
+                    SizedBox(
+                      height: 50
+                    ),
+                    Icon(Icons.error, color: Colors.blue)
+                  ],
+                ),
+              ),
+            ),
+          )
+      );
+    }
+
+    this.isLoading = this._houseInfo.isLoading;
+
+//    if (this._houseInfo.isFail){
+//      this._houseInfo = _initHouse();
+//    }
+
     return Scaffold(
         backgroundColor: Theme
             .of(context)
@@ -238,11 +317,18 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
           padding:  EdgeInsets.only(right: 20.0, left: 20.0),
           child: Column(children: <Widget>[
             SizedBox(height: 20.0),
-            _searchBlock(() {
-              print('debug');
-            }),
-//            if
-            _houseInfoBlock(),
+            _searchBlock(() {print('debug');}),
+            (
+                this.isLoading ? _loadingPage() :
+                this._houseInfo.isFail ? _error_page() : _houseInfoBlock()
+            )
+//
+//            if (this.isLoading == true){
+//              _loadingPage()
+//            } else{
+//              _houseInfoBlock()
+//            }
+//            _error_page(),
           ]),
         ));
   }
