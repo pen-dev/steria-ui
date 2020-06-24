@@ -280,21 +280,25 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
               borderRadius: BorderRadius.all(Radius.circular(20)),
               color: Colors.white,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 50.0),
+                padding: EdgeInsets.only(
+                    left: 50.0,
+                    right: 50.0,
+                    top: 20
+                ),
                 child: Column(
-                  children: <Widget>[
+                    children: <Widget>[
+                    CircularProgressIndicator(),
+                    SizedBox(
+                        height: 20
+                    ),
                     Text(
-                      'Loading',
+                      'Поиск...',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.normal,
-                          fontSize: 30.0),
+                          fontSize: 12.0),
                     ),
-                    SizedBox(
-                      height: 50
-                    ),
-                    Icon(Icons.error, color: Colors.blue)
                   ],
                 ),
               ),
@@ -312,7 +316,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
                 SizedBox(height: 10),
                 InkWell(
                   child: Text(
-                    'v0.0.4',
+                    'v0.0.5',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.black,
