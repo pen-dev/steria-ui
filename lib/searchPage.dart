@@ -226,7 +226,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
             borderRadius: BorderRadius.all(Radius.circular(20)),
             color: Colors.white,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 50.0),
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                   children: <Widget>[
                     SizedBox(height: 8),
@@ -312,7 +312,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
                 SizedBox(height: 10),
                 InkWell(
                   child: Text(
-                    'v0.0.2',
+                    'v0.0.3',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.black,
