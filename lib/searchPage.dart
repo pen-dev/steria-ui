@@ -312,7 +312,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
                 SizedBox(height: 10),
                 InkWell(
                   child: Text(
-                    'v0.0.3',
+                    'v0.0.4',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.black,
@@ -335,7 +335,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
             .primaryColor,
         body: Padding(
           padding:  EdgeInsets.only(right: 20.0, left: 20.0),
-          child: Column(children: <Widget>[
+          child: ListView(children: <Widget>[
             SizedBox(height: 20.0),
             _searchBlock(() {print('debug');}),
             (
@@ -347,3 +347,6 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
         ));
   }
 }
+
+
+
