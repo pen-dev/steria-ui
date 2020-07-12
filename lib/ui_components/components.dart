@@ -6,10 +6,13 @@ import 'package:steriaf/steria_provider.dart';
 
 class SearchFieldWidget extends StatelessWidget {
 
-  TextEditingController _controller = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _controller = context.watch<HouseProvider>()
+        .searchController;
+
     return Container(
       height: 60,
       child: Material(
@@ -26,13 +29,8 @@ class SearchFieldWidget extends StatelessWidget {
               ),
               Expanded(
                 child: TextField(
-                  controller: this._controller,
+                  controller: _controller,
                   style: TextStyle(fontSize: 14, color: Colors.black),
-                  onChanged: (String value) {
-                    context.read<HouseProvider>().changeAddress(
-                      this._controller.text
-                    );
-                  },
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintStyle: TextStyle(fontSize: 14,

@@ -13,11 +13,8 @@ class HouseProvider with ChangeNotifier, DiagnosticableTreeMixin {
   bool _isFail = false;
   bool get isFail => this._isFail;
 
-  void changeAddress(String address){
-    this._currentAddress = address;
-    notifyListeners();
-  }
-
+  TextEditingController _controller = TextEditingController();
+  TextEditingController get searchController => this._controller;
 
   void loadData(){
 
