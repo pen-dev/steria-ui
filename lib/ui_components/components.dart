@@ -198,7 +198,7 @@ class ErrorCardWidget extends StatelessWidget {
       child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 50.0),
           child: Text(
-            'Упс. Не удалось найти дом по этому адресу',
+            'Упс.',
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: Colors.white,
