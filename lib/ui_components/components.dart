@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:steriaf/steria_provider.dart';
 
 
 class SearchFieldWidget extends StatelessWidget {
@@ -54,6 +56,7 @@ class ButtonWidget extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(15)),
           color: Color.fromRGBO(149, 16, 172, 100),
           child: InkWell(
+              onTap: () => context.read<HouseProvider>().loadData(),
               splashColor: Color.fromRGBO(160, 16, 172, 100),
               child: Ink(
                   height: 50.0,
@@ -167,7 +170,7 @@ class HouseCardInfoWidget extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(height: 8.0),
                     Text(
-                      'Title',
+                      '${context.watch<HouseProvider>().houseData.title}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.black,

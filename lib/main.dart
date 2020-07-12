@@ -1,10 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:steriaf/house.dart';
-import 'package:steriaf/searchPage.dart';
-import 'package:steriaf/searchPage.dart';
+import 'package:provider/provider.dart';
+import 'package:steriaf/pages/main_page.dart';
+import 'package:steriaf/steria_provider.dart';
+
 
 void main() {
-  runApp(SteriaApp());
+  runApp(
+      MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => HouseProvider())
+          ],
+          child: SteriaApp()));
 }
 
 class SteriaApp extends StatelessWidget {
@@ -17,7 +24,7 @@ class SteriaApp extends StatelessWidget {
           textTheme: TextTheme(title: TextStyle(color: Colors.red)),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: SearchGeneralPage()
+        home: MainPage(),
     );
   }
 }

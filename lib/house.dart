@@ -47,3 +47,24 @@ class House{
 
   }
 }
+
+//class HouseDataLoader {
+//
+//}
+
+
+class HouseData{
+  String title;
+  String architect;
+  String fullAddress;
+  String style;
+  String year;
+
+  HouseData({
+    @required this.title,
+    @required this.architect,
+    @required this.fullAddress,
+    @required this.style,
+    @required this.year
+});
+}
