@@ -257,7 +257,7 @@ class VersionInfoWidget extends StatelessWidget {
                 SizedBox(height: 10),
                 InkWell(
                   child: Text(
-                    'v0.0.5',
+                    'v0.1.0',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.black,
