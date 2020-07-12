@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:steriaf/house.dart';
 import 'package:steriaf/steria_provider.dart';
 
 
 class SearchFieldWidget extends StatelessWidget {
+
+  TextEditingController _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,9 +26,12 @@ class SearchFieldWidget extends StatelessWidget {
               ),
               Expanded(
                 child: TextField(
+                  controller: this._controller,
                   style: TextStyle(fontSize: 14, color: Colors.black),
                   onChanged: (String value) {
-                    print('Text: $value');
+                    context.read<HouseProvider>().changeAddress(
+                      this._controller.text
+                    );
                   },
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -160,6 +167,9 @@ class HouseCardInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    HouseData _data = context.watch<HouseProvider>().houseData;
+
     return CardWidget(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -170,7 +180,7 @@ class HouseCardInfoWidget extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(height: 8.0),
                     Text(
-                      '${context.watch<HouseProvider>().houseData.title}',
+                      '${_data.title}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.black,
@@ -181,11 +191,11 @@ class HouseCardInfoWidget extends StatelessWidget {
               )
               ,
               SizedBox(height: 10.00),
-              this._wrapRow('Архитекторы:', 'text 1'),
+              this._wrapRow('Архитекторы:', '${_data.architect}'),
               SizedBox(height: 4.00),
-              this._wrapRow('Год постройки:', 'text 2'),
+              this._wrapRow('Год постройки:', '${_data.year}'),
               SizedBox(height: 4.00),
-              this._wrapRow('Стиль:', 'text 3'),
+              this._wrapRow('Стиль:', '${_data.style}'),
             ]
         ),
       ),
