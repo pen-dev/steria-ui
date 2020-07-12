@@ -16,15 +16,15 @@ class HouseProvider with ChangeNotifier, DiagnosticableTreeMixin {
   TextEditingController _controller = TextEditingController();
   TextEditingController get searchController => this._controller;
 
-  void loadData(){
+  void loadData() async{
+    this._isFail = false;
 
-    this._houseData = HouseData(
-        title: 'Test title1',
-        architect: 'Architect',
-        fullAddress: 'Full address',
-        style: 'Style',
-        year: 'year'
-    );
+    try {
+      this._houseData = await HouseDataLoader().load(_controller.text);
+    }
+    on SteriaBaseException{
+      this._isFail = true;
+    }
 
     notifyListeners();
   }

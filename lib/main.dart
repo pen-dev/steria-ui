@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:steriaf/pages/error_page.dart';
 import 'package:steriaf/pages/main_page.dart';
 import 'package:steriaf/steria_provider.dart';
 
@@ -17,6 +17,9 @@ void main() {
 class SteriaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    bool _isFail = context.watch<HouseProvider>().isFail;
+
     return MaterialApp(
         title: "Steria",
         theme: ThemeData(
@@ -24,7 +27,7 @@ class SteriaApp extends StatelessWidget {
           textTheme: TextTheme(title: TextStyle(color: Colors.red)),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: MainPage(),
+        home: (_isFail ? ErrorPage() : MainPage()),
     );
   }
 }

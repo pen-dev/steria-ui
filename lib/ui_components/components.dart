@@ -7,7 +7,6 @@ import 'package:steriaf/steria_provider.dart';
 class SearchFieldWidget extends StatelessWidget {
 
 
-
   @override
   Widget build(BuildContext context) {
     TextEditingController _controller = context.watch<HouseProvider>()
