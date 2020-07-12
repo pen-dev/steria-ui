@@ -1,6 +1,6 @@
 import 'dart:convert' as convert;
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class House{
@@ -61,10 +61,10 @@ class HouseData{
   String year;
 
   HouseData({
-    @required this.title,
-    @required this.architect,
-    @required this.fullAddress,
-    @required this.style,
-    @required this.year
+    this.title='',
+    this.architect='',
+    this.fullAddress='',
+    this.style='',
+    this.year=''
 });
 }
