@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:steriaf/house.dart';
 
 
+enum StatePage {homePage, errorPage, loadingPage}
+
 class HouseProvider with ChangeNotifier, DiagnosticableTreeMixin {
   String _currentAddress;
   String get currentAddress => this._currentAddress;
@@ -13,20 +15,27 @@ class HouseProvider with ChangeNotifier, DiagnosticableTreeMixin {
   bool _isFail = false;
   bool get isFail => this._isFail;
 
+  StatePage _currentState = StatePage.homePage;
+  StatePage get currentState => this._currentState;
+
   TextEditingController _controller = TextEditingController();
   TextEditingController get searchController => this._controller;
 
   void loadData() async{
-    this._isFail = false;
+    this._currentState = StatePage.loadingPage;
+    notifyListeners();
 
     try {
       this._houseData = await HouseDataLoader().load(_controller.text);
+      this._currentState = StatePage.homePage;
     }
     on SteriaBaseException{
-      this._isFail = true;
+      this._currentState = StatePage.errorPage;
+    }
+    finally{
+      notifyListeners();
     }
 
-    notifyListeners();
   }
 
 }
