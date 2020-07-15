@@ -267,6 +267,7 @@ class VersionInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.bottomCenter,
         padding: EdgeInsets.symmetric(horizontal: 50.0),
         child: Center(
             child: Column(
