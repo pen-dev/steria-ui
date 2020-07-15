@@ -53,6 +53,16 @@ class SearchFieldWidget extends StatelessWidget {
 class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    void _tap(){
+      context.read<HouseProvider>().loadData();
+      var currentRoute = ModalRoute.of(context).settings.name;
+
+      if (currentRoute == null || currentRoute != '/houseInfo' ){
+        Navigator.pushNamed(context, '/houseInfo');
+      }
+    }
+
     return Container(
       height: 60,
       child: Material(
@@ -60,7 +70,7 @@ class ButtonWidget extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(15)),
           color: Color.fromRGBO(149, 16, 172, 100),
           child: InkWell(
-              onTap: () => context.read<HouseProvider>().loadData(),
+              onTap: () => { _tap() },
               splashColor: Color.fromRGBO(160, 16, 172, 100),
               child: Ink(
                   height: 50.0,
