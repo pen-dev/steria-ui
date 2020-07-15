@@ -144,8 +144,9 @@ class HouseCardInfoWidget extends StatelessWidget {
 
   Widget _wrapRow(String leftText, String rightText){
     return Padding(
-        padding: EdgeInsets.only(bottom: 50.0),
+        padding: EdgeInsets.only(bottom: 10.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(
                 width: 100,
@@ -168,32 +169,34 @@ class HouseCardInfoWidget extends StatelessWidget {
     HouseData _data = context.watch<HouseProvider>().houseData;
 
     return CardWidget(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-            children: <Widget>[
-              SizedBox(height: 8),
-              Column(
-                  children: <Widget>[
-                    SizedBox(height: 8.0),
-                    Text(
-                      '${_data.title}',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 20.0),
-                    )
-                  ]
-              )
-              ,
-              SizedBox(height: 10.00),
-              this._wrapRow('Архитекторы:', '${_data.architect}'),
-              SizedBox(height: 4.00),
-              this._wrapRow('Год постройки:', '${_data.year}'),
-              SizedBox(height: 4.00),
-              this._wrapRow('Стиль:', '${_data.style}'),
-            ]
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 8),
+                Column(
+                    children: <Widget>[
+                      SizedBox(height: 8.0),
+                      Text(
+                        '${_data.title}',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 20.0),
+                      )
+                    ]),
+            SizedBox(height: 10.00),
+                this._wrapRow('Архитекторы:', '${_data.architect}'),
+                SizedBox(height: 4.00),
+                this._wrapRow('Год постройки:', '${_data.year}'),
+                SizedBox(height: 4.00),
+                this._wrapRow('Стиль:', '${_data.style}'),
+              ]
+          ),
         ),
       ),
     );
@@ -205,16 +208,26 @@ class ErrorCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardWidget(
-      child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50.0),
-          child: Text(
-            'Упс.',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.normal,
-                fontSize: 30.0),
-          )
+      child: Center(
+        child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 50.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.error, color: Colors.red),
+                SizedBox(width: 10,),
+                Text(
+                  'Упс. Попробуйте другой адрес.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 15.0),
+                ),
+              ],
+            )
+        ),
       ),
     );
   }
@@ -225,13 +238,10 @@ class LoadingCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardWidget(
-      child: Padding(
-        padding: EdgeInsets.only(
-            left: 50.0,
-            right: 50.0,
-            top: 20
-        ),
+      child: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             CircularProgressIndicator(),
             SizedBox(
