@@ -92,10 +92,10 @@ class SearchBlockWidget extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 20.0),
                 child: SearchFieldWidget(),
               ),
-              SizedBox(height: 30,),
               Padding(
                 padding: EdgeInsets.only(
-                    bottom: 20.0,
+                    top: 5.0,
+                    bottom: 30.0,
                     left: 10.0,
                     right: 10.0
                 ),
