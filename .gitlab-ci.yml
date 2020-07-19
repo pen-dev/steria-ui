@@ -3,7 +3,7 @@ image: cirrusci/flutter:stable
 pages:
   script:
   - flutter config --enable-web
-  - flutter build web --release
+  - flutter build web --release --dart-define=FLUTTER_WEB_USE_SKIA=true
   # The build directory is created based on the value set for projectName in
   # website/siteConfig.js. If you change it there, you need to change it here
   # as well.
