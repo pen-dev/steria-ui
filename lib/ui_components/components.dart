@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steriaf/house.dart';
@@ -176,7 +177,7 @@ class HouseCardInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    HouseData _data = context.watch<HouseProvider>().houseData;
+    HouseData _data = context.watch<HouseProvider>().selectHouse;
 
     return CardWidget(
       child: Center(
@@ -285,7 +286,7 @@ class VersionInfoWidget extends StatelessWidget {
                 SizedBox(height: 10),
                 InkWell(
                   child: Text(
-                    'v0.1.0',
+                    'v0.2.0',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.black,
@@ -300,6 +301,99 @@ class VersionInfoWidget extends StatelessWidget {
   }
 }
 
+
+
+
+class MiniHouseCard extends StatelessWidget {
+
+  MiniHouseCard(this.houseData);
+
+  HouseData houseData;
+
+  static const height = 100.0;
+
+  final ShapeBorder shape = Border();
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: false,
+      bottom: false,
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: SizedBox(
+          height: height,
+          child: Card(
+            // This ensures that the Card's children (including the ink splash) are clipped correctly.
+            clipBehavior: Clip.antiAlias,
+            elevation: 2.0,
+//                shape: shape,
+            child: InkWell(
+              onTap: () {
+                print('Card was tapped');
+                context.read<HouseProvider>().setActiveHouse(this.houseData);
+                context.read<HouseProvider>().setState(StatePage.homePage);
+              },
+              // Generally, material cards use onSurface with 12% opacity for the pressed state.
+              splashColor:
+              Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
+              // Generally, material cards do not have a highlight overlay.
+              highlightColor: Colors.transparent,
+              child: SizedBox(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: DefaultTextStyle(
+                    softWrap: false,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // This array contains the three line description on each card
+                        // demo.
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Text(
+                            this.houseData.title,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16.0),
+                          ),
+                        ),
+                        Text(this.houseData.fullAddress),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              ),
+            ),
+          ),
+      ),
+    );
+  }
+}
+
+class CardHouseMiniInfoWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    var searchResults = context.watch<HouseProvider>().searchResults;
+
+    return CardWidget(
+      child: ListView(
+        children: <Widget>[
+          for (final houseData in searchResults)
+          MiniHouseCard(houseData),
+        ]
+      )
+    );
+  }
+}
 
 
 
