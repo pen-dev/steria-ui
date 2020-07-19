@@ -15,6 +15,8 @@ class MainPage extends StatelessWidget {
         return ui.ErrorCardWidget();
       case StatePage.homePage:
         return ui.HouseCardInfoWidget();
+      case StatePage.cardsResults:
+        return ui.CardHouseMiniInfoWidget();
       default:
         throw Exception('Error state unknown');
     }
@@ -23,20 +25,31 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    StatePage statePage = context.watch<HouseProvider>().currentState;
+    StatePage statePage = context
+        .watch<HouseProvider>()
+        .currentState;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: ListView(children: <Widget>[
-          SizedBox(height: 20.0),
-          ui.SearchBlockWidget(),
-          this._get_page_of_state(statePage),
-          ui.VersionInfoWidget(),
-        ])
-      )
+        backgroundColor: Theme
+            .of(context)
+            .primaryColor,
+        body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: ListView(children: <Widget>[
+              SizedBox(height: 20.0),
+              ui.SearchBlockWidget(),
+              this._get_page_of_state(statePage),
+              ui.VersionInfoWidget(),
+            ])
+        ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              context.read<HouseProvider>().setState(StatePage.cardsResults);
+            },
+            clipBehavior: Clip.none,
+            child: Icon(Icons.arrow_back)
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
