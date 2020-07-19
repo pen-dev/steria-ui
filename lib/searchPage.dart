@@ -316,7 +316,7 @@ class _SearchGeneralPageState extends State<SearchGeneralPage>
                 SizedBox(height: 10),
                 InkWell(
                   child: Text(
-                    'v0.0.5',
+                    'v0.0.6',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.black,
