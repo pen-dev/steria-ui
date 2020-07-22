@@ -3,14 +3,15 @@ import 'package:provider/provider.dart';
 import 'package:steriaf/house.dart';
 import 'package:steriaf/steria_provider.dart';
 
-
 class SearchFieldWidget extends StatelessWidget {
+  final ValueChanged<BuildContext> searchBehavior;
 
+  SearchFieldWidget(this.searchBehavior);
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _controller = context.watch<HouseProvider>()
-        .searchController;
+    TextEditingController _controller =
+        context.watch<HouseProvider>().searchController;
 
     return Container(
       height: 60,
@@ -29,10 +30,14 @@ class SearchFieldWidget extends StatelessWidget {
               Expanded(
                 child: TextField(
                   controller: _controller,
+                  onSubmitted: (String text) {
+                    searchBehavior(context);
+                  },
                   style: TextStyle(fontSize: 14, color: Colors.black),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintStyle: TextStyle(fontSize: 14,
+                    hintStyle: TextStyle(
+                        fontSize: 14,
                         color: Colors.grey,
                         fontWeight: FontWeight.bold),
                     hintText: "Название улицы и номер дома",
@@ -43,26 +48,18 @@ class SearchFieldWidget extends StatelessWidget {
             ],
           ),
         ),
-      )
-      ,
+      ),
     );
   }
 }
 
-
 class ButtonWidget extends StatelessWidget {
+  final ValueChanged<BuildContext> searchBehavior;
+
+  const ButtonWidget(this.searchBehavior);
+
   @override
   Widget build(BuildContext context) {
-
-    void _tap(){
-      context.read<HouseProvider>().loadData();
-      var currentRoute = ModalRoute.of(context).settings.name;
-
-      if (currentRoute == null || currentRoute != '/houseInfo' ){
-        Navigator.pushNamed(context, '/houseInfo');
-      }
-    }
-
     return Container(
       height: 60,
       child: Material(
@@ -70,53 +67,50 @@ class ButtonWidget extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(15)),
           color: Color.fromRGBO(149, 16, 172, 100),
           child: InkWell(
-              onTap: () => { _tap() },
+              onTap: () => {searchBehavior(context)},
               splashColor: Color.fromRGBO(160, 16, 172, 100),
               child: Ink(
                   height: 50.0,
                   width: 150.0,
                   child: Center(
                       child: Text(
-                        'Найти',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 18.0),
-                      )
-                  )
-              )
-          )
-      ),
+                    'Найти',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18.0),
+                  ))))),
     );
   }
 }
 
 class SearchBlockWidget extends StatelessWidget {
+  void _searchBehavior(BuildContext context) {
+    context.read<HouseProvider>().loadData();
+    var currentRoute = ModalRoute.of(context).settings.name;
+
+    if (currentRoute == null || currentRoute != '/houseInfo') {
+      Navigator.pushNamed(context, '/houseInfo');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(bottom: 20.0),
-                child: SearchFieldWidget(),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 5.0,
-                    bottom: 30.0,
-                    left: 10.0,
-                    right: 10.0
-                ),
-                child: ButtonWidget(),
-              ),
-            ]
-        )
-    );
+        child: Column(children: <Widget>[
+      Padding(
+        padding: EdgeInsets.only(bottom: 20.0),
+        child: SearchFieldWidget(_searchBehavior),
+      ),
+      Padding(
+        padding:
+            EdgeInsets.only(top: 5.0, bottom: 30.0, left: 10.0, right: 10.0),
+        child: ButtonWidget(_searchBehavior),
+      ),
+    ]));
   }
 }
-
 
 class CardWidget extends StatelessWidget {
   final Widget child;
@@ -134,48 +128,37 @@ class CardWidget extends StatelessWidget {
             color: Colors.white,
             child: this.child,
           ),
-        )
-    );
+        ));
   }
 }
 
 class HouseCardInfoWidget extends StatelessWidget {
-
-  Widget _wrapTextRow(String text){
+  Widget _wrapTextRow(String text) {
     return Text(
       text,
       textAlign: TextAlign.left,
       style: TextStyle(
-          color: Colors.grey,
-          fontWeight: FontWeight.normal,
-          fontSize: 14.0),
+          color: Colors.grey, fontWeight: FontWeight.normal, fontSize: 14.0),
     );
   }
 
-  Widget _wrapRow(String leftText, String rightText){
+  Widget _wrapRow(String leftText, String rightText) {
     return Padding(
         padding: EdgeInsets.only(bottom: 10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
-                width: 100,
-                child: this._wrapTextRow(leftText)),
+            SizedBox(width: 100, child: this._wrapTextRow(leftText)),
             SizedBox(
               width: 30,
             ),
-            SizedBox(
-                width: 100,
-                child : this._wrapTextRow(rightText)),
+            SizedBox(width: 100, child: this._wrapTextRow(rightText)),
           ],
-        )
-    );
-
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
-
     HouseData _data = context.watch<HouseProvider>().houseData;
 
     return CardWidget(
@@ -187,32 +170,29 @@ class HouseCardInfoWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(height: 8),
-                Column(
-                    children: <Widget>[
-                      SizedBox(height: 8.0),
-                      Text(
-                        '${_data.title}',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 20.0),
-                      )
-                    ]),
-            SizedBox(height: 10.00),
+                Column(children: <Widget>[
+                  SizedBox(height: 8.0),
+                  Text(
+                    '${_data.title}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 20.0),
+                  )
+                ]),
+                SizedBox(height: 10.00),
                 this._wrapRow('Архитекторы:', '${_data.architect}'),
                 SizedBox(height: 4.00),
                 this._wrapRow('Год постройки:', '${_data.year}'),
                 SizedBox(height: 4.00),
                 this._wrapRow('Стиль:', '${_data.style}'),
-              ]
-          ),
+              ]),
         ),
       ),
     );
   }
 }
-
 
 class ErrorCardWidget extends StatelessWidget {
   @override
@@ -226,7 +206,9 @@ class ErrorCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Icon(Icons.error, color: Colors.red),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Text(
                   'Упс. Попробуйте другой адрес.',
                   textAlign: TextAlign.center,
@@ -236,13 +218,11 @@ class ErrorCardWidget extends StatelessWidget {
                       fontSize: 15.0),
                 ),
               ],
-            )
-        ),
+            )),
       ),
     );
   }
 }
-
 
 class LoadingCardWidget extends StatelessWidget {
   @override
@@ -254,9 +234,7 @@ class LoadingCardWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             CircularProgressIndicator(),
-            SizedBox(
-                height: 20
-            ),
+            SizedBox(height: 20),
             Text(
               'Поиск...',
               textAlign: TextAlign.center,
@@ -272,35 +250,27 @@ class LoadingCardWidget extends StatelessWidget {
   }
 }
 
-
 class VersionInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.bottomCenter,
+        alignment: Alignment.bottomCenter,
         padding: EdgeInsets.symmetric(horizontal: 50.0),
         child: Center(
             child: Column(
-              children: <Widget>[
-                SizedBox(height: 10),
-                InkWell(
-                  child: Text(
-                    'v0.1.0',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 12.0),
-                  ),
-                ),
-              ],
-            )
-        )
-    );
+          children: <Widget>[
+            SizedBox(height: 10),
+            InkWell(
+              child: Text(
+                'v0.1.0',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 12.0),
+              ),
+            ),
+          ],
+        )));
   }
 }
-
-
-
-
-
