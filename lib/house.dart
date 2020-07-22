@@ -58,6 +58,14 @@ class HouseDataLoader {
 
   HouseData _houseData = HouseData();
 
+  String _replaceElseNull(String value){
+    if (value == 'null'){
+      return 'Неизвестно';
+    }
+    
+    return value;
+  }
+
   void _load(String address) async {
     var response = await http.get(
       '$_url?address=$address',
@@ -66,11 +74,11 @@ class HouseDataLoader {
     print('$data');
 
     if (response.statusCode == 200) {
-      this._houseData.title = data['r_name'].toString();
-      this._houseData.architect = data['r_architect'].toString();
-      this._houseData.year = data['r_years_string'].toString();
-      this._houseData.style = data['r_style'].toString();
-      this._houseData.fullAddress = data['r_adress'].toString();
+      this._houseData.title = _replaceElseNull(data['r_name'].toString());
+      this._houseData.architect = _replaceElseNull(data['r_architect'].toString());
+      this._houseData.year = _replaceElseNull(data['r_years_string'].toString());
+      this._houseData.style = _replaceElseNull(data['r_style'].toString());
+      this._houseData.fullAddress = _replaceElseNull(data['r_adress'].toString());
 
     } else {
       throw SteriaBaseException();
