@@ -25,14 +25,19 @@ class HouseProvider with ChangeNotifier, DiagnosticableTreeMixin {
     this._currentState = StatePage.loadingPage;
     notifyListeners();
 
-    try {
-      this._houseData = await HouseDataLoader().load(_controller.text);
-      this._currentState = StatePage.homePage;
-    }
-    on SteriaBaseException{
+    if (_controller.text != '') {
+      try {
+        this._houseData = await HouseDataLoader().load(_controller.text);
+        this._currentState = StatePage.homePage;
+      }
+      on SteriaBaseException {
+        this._currentState = StatePage.errorPage;
+      }
+      finally {
+        notifyListeners();
+      }
+    } else {
       this._currentState = StatePage.errorPage;
-    }
-    finally{
       notifyListeners();
     }
 
