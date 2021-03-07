@@ -8,18 +8,15 @@ on:
 env:
   CI: true
   NODE_VERSION: 10.x
-  PYTHON_VERSION: 3.x
           
 jobs:
-   
-   
   build:
     runs-on: ubuntu-latest
     container:
       image: cirrusci/flutter:1.20.1
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - run: flutter config --enable-web
       - run: flutter build web --release --dart-define=FLUTTER_WEB_USE_SKIA=true
 
