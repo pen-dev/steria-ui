@@ -22,6 +22,7 @@ jobs:
         with:
           flutter-version: '1.20.1'
       - run: flutter config --enable-web
+      - run: flutter pub get
       - run: flutter build web --release --dart-define=FLUTTER_WEB_USE_SKIA=true
 
       - name: GH pages deploy
@@ -30,7 +31,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           # A verified email.
-          email: penlipenkovladislav@gmail.com
+          email: ${{ secrets.EMAILS }}
           # Where static files are.
           build_dir: build/web
           # Which branch to push files.
