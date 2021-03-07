@@ -2,7 +2,7 @@ name: ci
 on:
   push:
     branches:
-      - main
+      - master
 
 # Environment
 env:
@@ -13,10 +13,25 @@ env:
 jobs:
    
    
-  deploy:
-    runs-on: cirrusci/flutter:1.20.1
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: cirrusci/flutter:1.20.1
+
     steps:
       - uses: actions/checkout@v2
       - run: flutter config --enable-web
       - run: flutter build web --release --dart-define=FLUTTER_WEB_USE_SKIA=true
-      - uses:
+
+      - name: GH pages deploy
+        uses: Cecilapp/GitHub-Pages-deploy@3.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # A verified email.
+          email: penlipenkovladislav@gmail.com
+          # Where static files are.
+          build_dir: build/web
+          # Which branch to push files.
+          branch: gh-pages
+          # The custom domain name.
